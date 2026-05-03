@@ -92,11 +92,11 @@
                 <div class="row">
                     <div class="mb-3 col-4">
                         <label for="karutaFrameColorInput" class="form-label">枠色</label>
-                        <input type="color" class="form-control form-control-color" id="karutaFrameColorInput" value="" title="枠色を選んでください">
+                        <input type="color" class="form-control form-control-color" id="karutaFrameColorInput" value="#006400" title="枠色を選んでください">
                     </div>
                     <div class="mb-3 col-4">
                         <label for="karutaEfudaBackgroundColorInput" class="form-label">背景色</label>
-                        <input type="color" class="form-control form-control-color" id="karutaEfudaBackgroundColorInput" value="" title="絵札の背景色を選んでください">
+                        <input type="color" class="form-control form-control-color" id="karutaEfudaBackgroundColorInput" value="#FFFFFF" title="絵札の背景色を選んでください">
                     </div>
                     <div class="mb-3 col-4">
                         <label for="karutaCircleTextInput" class="form-label">文字</label>
@@ -125,18 +125,20 @@
 
         <div class="container">
             <h2 class="mb-3">ステップ４：画像を保存する</h2>
-            <div class="mb-3" id="saveButtonArea">
-                <button class="btn btn-secondary" id="imageSaveButton">画像を保存する</button>
+            <div class="mb-3" id="imageGenerateButton">
+                <button class="btn btn-secondary" id="imageGenerateButton">画像を保存する</button>
             </div>
             <div class="mb-3">
-                <p>ボタンを押すと画像のダウンロードを開始します。スマートフォンをご利用の方は下に表示される画像を長押しして保存してください。</p>
+                <p>ボタンを押すと保存用の画像が表示されます。ダウンロードボタンもしくは表示されている画像を長押しして保存してください。</p>
             </div>
             <div class="row">
                 <div class="mb-3 col-12 col-md-6">
-                    <img id="outputKarutaEfudaImage" src=""/>
+                    <p><img id="outputKarutaEfudaImage" src=""/></p>
+                    <button class="btn btn-secondary" id="efudaImageDownloadButton">ダウンロード</button>
                 </div>
                 <div class="mb-3 col-12 col-md-6">
-                    <img id="outputKarutaYomifudaImage" src=""/>
+                    <p><img id="outputKarutaYomifudaImage" src=""/></p>
+                    <button class="btn btn-secondary" id="yomifudaImageDownloadButton">ダウンロード</button>
                 </div>
             </div>
         </div>

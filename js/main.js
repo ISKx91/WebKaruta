@@ -16,12 +16,12 @@ class KarutaGenerator {
         // かるたの枠色（絵札・読み札共通）
         this.frameColor = '#006400';
         // 絵札の背景色
-        this.efudaBackgroudColor = '#FFF';
+        this.efudaBackgroudColor = '#FFFFFF';
         // 絵札の文字
         this.efudaText = '';
         // 読み札の文字
         this.yomifudaText = '';
-        this.yomifudaTextSize = 120;
+        this.yomifudaTextSize = 150;
     }
 
     /***************************************
@@ -119,13 +119,28 @@ class KarutaGenerator {
         //-------------
         // ステップ４
         //-------------
-        const imgSaveButton = document.getElementById('imageSaveButton');
         const event = window.ontouchstart === undefined ? 'click' : 'touchstart';
-        imgSaveButton.addEventListener(event, this.downloadImage.bind(this));
+        // 画像保存ボタン（画像生成）
+        const imageGenerateButton = document.getElementById('imageGenerateButton');
+        imageGenerateButton.addEventListener(event, this.generateImage.bind(this));
 
+        // 絵札画像ダウンロードボタン
+        this.efudaImageDownloadButton = document.getElementById('efudaImageDownloadButton');
+        this.efudaImageDownloadButton.addEventListener(event, this.downloadEfudaImage.bind(this));
+        this.efudaImageDownloadButton.style = 'display: none;';
+        this.efudaImageDownloadButton.disabled = true;
+
+        // 絵札画像ダウンロードボタン
+        this.yomifudaImageDownloadButton = document.getElementById('yomifudaImageDownloadButton');
+        this.yomifudaImageDownloadButton.addEventListener(event, this.downloadYomifudaImage.bind(this));
+        this.yomifudaImageDownloadButton.style = 'display: none;';
+        this.yomifudaImageDownloadButton.disabled = true;
+
+        // 絵札画像
         this.outputKarutaEfudaImage = document.getElementById('outputKarutaEfudaImage');
         this.outputKarutaEfudaImage.style = 'display: none;';
-
+        
+        // 読み札画像
         this.outputKarutaYomifudaImage = document.getElementById('outputKarutaYomifudaImage');
         this.outputKarutaYomifudaImage.style = 'display: none;';
 
@@ -223,7 +238,7 @@ class KarutaGenerator {
     ***************************************/
     karutaCircleTextInputChange(event) {
         // かるた文字の取得
-        this.efudaText = event.target.value;
+        this.efudaText = event.target.value.trim() ;
         // 再描画
         this.#redraw(false, true, false);
     }
@@ -247,17 +262,17 @@ class KarutaGenerator {
     ***************************************/
     karutaYomifudaTextInputChange(event) {
         // 読み札文字の取得
-        this.yomifudaText = event.target.value;
+        this.yomifudaText = event.target.value.trim();
         // 再描画
         this.#redraw(false, false, true);
     }
 
     /***************************************
-     * 画像を保存する
+     * 画像を生成する
      * @param {Event} event 
      * @return {void}
     ***************************************/
-    downloadImage(event) {
+    generateImage(event) {
         // img要素に表示
         const efudaImgUrl = this.efudaCanvas.toDataURL('image/png');
         this.outputKarutaEfudaImage.src = efudaImgUrl;
@@ -265,15 +280,38 @@ class KarutaGenerator {
         const yomifudaImgUrl = this.yomifudaCanvas.toDataURL('image/png');
         this.outputKarutaYomifudaImage.src = yomifudaImgUrl;
         this.outputKarutaYomifudaImage.style = '';
+        // ダウンロードボタンを有効にする
+        this.efudaImageDownloadButton.style = '';
+        this.efudaImageDownloadButton.disabled = false;
+        this.yomifudaImageDownloadButton.style = '';
+        this.yomifudaImageDownloadButton.disabled = false;
+    }
 
+    /***************************************
+     * 絵札画像を保存する
+     * @param {Event} event 
+     * @return {void}
+    ***************************************/
+    downloadEfudaImage(event) {
         // ダウンロード
         const dummyLink = document.createElement('a');
         dummyLink.type     = 'application/octet-stream';
         dummyLink.download = `karuta_e_${KarutaGenerator.#getDateTimeString()}.png`;
-        dummyLink.href = efudaImgUrl;
+        dummyLink.href = this.outputKarutaEfudaImage.src;
         dummyLink.click();
+    }
+
+    /***************************************
+     * 読み札画像を保存する
+     * @param {Event} event 
+     * @return {void}
+    ***************************************/
+    downloadYomifudaImage(event) {
+        // ダウンロード
+        const dummyLink = document.createElement('a');
+        dummyLink.type     = 'application/octet-stream';
         dummyLink.download = `karuta_yomi_${KarutaGenerator.#getDateTimeString()}.png`;
-        dummyLink.href = yomifudaImgUrl;
+        dummyLink.href = this.outputKarutaYomifudaImage.src;
         dummyLink.click();
     }
 
@@ -334,7 +372,7 @@ class KarutaGenerator {
         // 円描画
         this.efudaCtx.beginPath();
         this.efudaCtx.arc(840, 200, 120, 0 * Math.PI / 180, 360 * Math.PI / 180, false);
-        this.efudaCtx.fillStyle = "#FFF" ;
+        this.efudaCtx.fillStyle = "#FFFFFF" ;
         this.efudaCtx.fill() ;
         this.efudaCtx.strokeStyle = this.frameColor;
         this.efudaCtx.lineWidth   = 20;
@@ -354,28 +392,56 @@ class KarutaGenerator {
     ***************************************/
     #drawKarutaYomiText() {
         // 読み札
-        this.yomifudaCtx.fillStyle   = '#FFF';
+        this.yomifudaCtx.fillStyle = '#FFFFFF';
         this.yomifudaCtx.fillRect(0, 0, this.yomifudaCanvas.width, this.yomifudaCanvas.height);
         this.yomifudaCtx.strokeStyle = this.frameColor;
-        this.yomifudaCtx.lineWidth   = 100;
+        this.yomifudaCtx.lineWidth = 100;
         this.yomifudaCtx.strokeRect(0, 0, this.yomifudaCanvas.width, this.yomifudaCanvas.height);
         // 文字描画
-        this.yomifudaCtx.fillStyle    = '#000';
-        this.yomifudaCtx.font         = `${this.yomifudaTextSize}px 'Noto Sans JP', sans-serif`;
-        this.yomifudaCtx.textAlign    = 'center';
-        this.yomifudaCtx.textBaseline = 'middle';
-        let txtPosX = 840;
-        let txtPosY = 200;
+        this.yomifudaCtx.fillStyle = '#000000';
+        this.yomifudaCtx.font = `${this.yomifudaTextSize}px 'Noto Sans JP', sans-serif`;
+
+        // 座標計算用変数
+        let lineCount = 0; // 行数カウント
+        let charCount = 0; // 行ごとの文字数カウント
+        const paddingTop = this.yomifudaTextSize / 2;
+        const offset = (this.yomifudaText.match(/\n/g)?.length ?? 0) / 2;
+        const centerCoordinates = this.yomifudaCanvas.width / 2;
+        // 正規表現：半角英数記号
+        const regexp = new RegExp(/^[a-zA-Z0-9!-/:-@¥[-`{-~]*$/);
         for (let c of this.yomifudaText) {
             if (c === '\n') {
-                 // X座標を1行分左、Y座標を初期値
-                txtPosX -= this.yomifudaTextSize;
-                txtPosY = 200;
+                // 改行コードの場合は行数カウントをインクリメント
+                lineCount++;
+                // 行が変わるので0にする
+                charCount = 0;
                 continue;
             }
-            this.yomifudaCtx.fillText(c, txtPosX, txtPosY);
-            txtPosY += this.yomifudaTextSize;
+            if (regexp.test(c)) {
+                // 調整
+                this.yomifudaCtx.textAlign    = 'center';
+                this.yomifudaCtx.textBaseline = 'top';
+                // 左上（0,0）を基準に座標計算
+                const x = centerCoordinates - (this.yomifudaTextSize * (lineCount - offset));
+                const y = paddingTop + (this.yomifudaTextSize * charCount);
+                this.yomifudaCtx.fillText(c, x, y)
+            } else {
+                // 調整
+                this.yomifudaCtx.textAlign    = 'left';
+                this.yomifudaCtx.textBaseline = 'middle';
+                // 日本語縦書き対応
+                this.yomifudaCtx.save();
+                this.yomifudaCtx.translate(this.yomifudaCanvas.width, 0); // 右上に移動
+                this.yomifudaCtx.rotate(Math.PI / 2);
+                // 右上（0,0）を基準に座標計算
+                const x = paddingTop + (this.yomifudaTextSize * charCount);
+                const y = centerCoordinates + (this.yomifudaTextSize * (lineCount - offset));
+                this.yomifudaCtx.fillText(c, x, y)
+                this.yomifudaCtx.restore();
+            }
+            charCount++;
         }
+
     }
 
     //---------------------------------------------
