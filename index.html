@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <!--
+    **********************************************************************
+    *   _    _        _       _   __                     _           _   *
+    *  | |  | |      | |     | | / /                    | |         | |  *
+    *  | |  | |  ___ | |__   | |/ /   __ _  _ __  _   _ | |_   __ _ | |  *
+    *  | |/\| | / _ \| '_ \  |    \  / _` || '__|| | | || __| / _` || |  *
+    *  \  /\  /|  __/| |_) | | |\  \| (_| || |   | |_| || |_ | (_| ||_|  *
+    *   \/  \/  \___||_.__/  \_| \_/ \__,_||_|    \__,_| \__| \__,_|(_)  *
+    *                                                                    *
+    **********************************************************************
+    -->
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>うぇぶかるた！</title>
+    <meta name="description" content="Webでかるた風画像を作ろう！" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- favicon -->
+    <!--
+    <link rel="icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    -->
+
+    <!-- ogp -->
+    <meta property="og:site_name" content="うぇぶかるた！" />
+    <!-- <meta property="og:url" content="" /> -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="うぇぶかるた！" />
+    <meta property="og:description" content="Webでかるた風画像を作ろう！" />
+    <!-- <meta property="og:image" content="" /> -->
+    <meta property="og:locale" content="ja_JP" />
+    <!-- twitter card-->>
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- web font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- JavaScript-->
+    <script src="js/main.js" defer></script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <header>
+        <div class="header-box">
+            <div class="header-div-1">
+                <p class="sitename">うぇぶかるた！</p>
+            </div>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container">
+            <h2 class="mb-3">ステップ１：絵札の画像を選ぶ</h2>
+            <div class="mb-3 imageSelectArea">
+                <input type="file" class="form-control" id="imgSelectInput" accept=".png,.jpg,.jpeg">
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="mb-3">ステップ２：絵札の作成</h2>
+            <div class="mb-3 canvasArea">
+                <canvas id="efudaCanvas"></canvas>
+            </div>
+            <div class="adjustmentArea">
+                <div class="mb-3">
+                    <label for="zoomSlider" class="form-label">画像サイズ</label>
+                    <input type="range" class="form-range" id="zoomSlider">
+                </div>
+                <div class="mb-3">
+                    <label for="zoomSlider" class="form-label">横位置</label>
+                    <input type="range" class="form-range" id="xPosMoveSlider">
+                </div>
+                <div class="mb-3">
+                    <label for="zoomSlider" class="form-label">縦位置</label>
+                    <input type="range" class="form-range" id="yPosMoveSlider">
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-4">
+                        <label for="karutaFrameColorInput" class="form-label">枠色</label>
+                        <input type="color" class="form-control form-control-color" id="karutaFrameColorInput" value="" title="枠色を選んでください">
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label for="karutaEfudaBackgroundColorInput" class="form-label">背景色</label>
+                        <input type="color" class="form-control form-control-color" id="karutaEfudaBackgroundColorInput" value="" title="絵札の背景色を選んでください">
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label for="karutaCircleTextInput" class="form-label">文字</label>
+                        <input type="text" class="form-control" id="karutaCircleTextInput">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="mb-3">ステップ３：読み札の作成</h2>
+            <div class="mb-3 canvasArea">
+                <canvas id="yomifudaCanvas"></canvas>
+            </div>
+            <div class="adjustmentArea">
+                <div class="mb-3">
+                    <label for="yomifudaTextSizeSlider" class="form-label">文字サイズ</label>
+                    <input type="range" class="form-range" id="yomifudaTextSizeSlider">
+                </div>
+                <div class="mb-3">
+                    <label for="karutaYomifudaTextInput" class="form-label">文字</label>
+                    <textarea class="form-control" id="karutaYomifudaTextInput" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="mb-3">ステップ４：画像を保存する</h2>
+            <div class="mb-3" id="saveButtonArea">
+                <button class="btn btn-secondary" id="imageSaveButton">画像を保存する</button>
+            </div>
+            <div class="mb-3">
+                <p>ボタンを押すと画像のダウンロードを開始します。スマートフォンをご利用の方は下に表示される画像を長押しして保存してください。</p>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12 col-md-6">
+                    <img id="outputKarutaEfudaImage" src=""/>
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                    <img id="outputKarutaYomifudaImage" src=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-box">
+            <div class="footer-div-1">
+                <p class="footer-copyright"><span class="footer-sitename">うぇぶかるた！</span> © Copyright 2026 ISK All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

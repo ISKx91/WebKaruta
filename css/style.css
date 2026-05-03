@@ -1,0 +1,80 @@
+body {
+    color: #333;
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #eeeeee;
+    margin: 0;
+}
+
+header {
+    background-color: darkgreen;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+footer {
+    background-color: #ddd;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.sitename {
+    font-family: "Cherry Bomb One";
+    font-size: 36px;
+    /*font-weight: bold;*/
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+.footer-copyright {
+    font-size: 12px;
+    color: #333;
+}
+
+.footer-sitename {
+    font-family: "Cherry Bomb One";
+}
+
+canvas, img {
+    border: dashed 3px #aaa;
+    width: 260px;
+    height: 365px;
+}
+
+@media screen and (min-width: 768px) {
+    canvas, img {
+        width: 520px;
+        height: 730px;    
+    }
+}
+
+.main-content {
+    width: 90%;
+    margin: auto;
+}
+
+.container {
+    margin: 20px;
+    padding: 10px;
+    background-color: #fafafa;
+    border: solid 0.5px #f0f0f0;
+    border-radius: 20px;
+    box-shadow: 3px 3px 4px #aaa;
+    text-align: center;
+}
+
+.adjustmentArea {
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 20px;
+} 
+
+#karutaFrameColorInput,
+#karutaEfudaBackgroundColorInput,
+#karutaCircleTextInput,
+#karutaYomifudaTextInput {
+    width: 100%;
+}
