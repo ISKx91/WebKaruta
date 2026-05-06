@@ -330,8 +330,6 @@ class KarutaGenerator {
     #redraw(redrawEfudaImage, redrawEfudaFrameAndCircle, redrawYomifuda) {
         // 絵札画像部分描画
         if (redrawEfudaImage) {
-            // キャンバスをクリア
-            this.efudaCtx.clearRect(0, 0, this.efudaCanvas.width, this.efudaCanvas.height);
             this.#drawKarutaEfudaImage();
         }
         // 絵札描画
@@ -350,6 +348,8 @@ class KarutaGenerator {
      * @return {void}
     ***************************************/
     #drawKarutaEfudaImage() {
+        // キャンバスをクリア
+        this.efudaCtx.clearRect(0, 0, this.efudaCanvas.width, this.efudaCanvas.height);
         // 背景描画
         this.efudaCtx.fillStyle   = this.efudaBackgroudColor;
         this.efudaCtx.fillRect(0, 0, this.efudaCanvas.width, this.efudaCanvas.height);
