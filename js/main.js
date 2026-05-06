@@ -127,22 +127,20 @@ class KarutaGenerator {
         // 絵札画像ダウンロードボタン
         this.efudaImageDownloadButton = document.getElementById('efudaImageDownloadButton');
         this.efudaImageDownloadButton.addEventListener(event, this.downloadEfudaImage.bind(this));
-        this.efudaImageDownloadButton.style = 'display: none;';
-        this.efudaImageDownloadButton.disabled = true;
 
         // 絵札画像ダウンロードボタン
         this.yomifudaImageDownloadButton = document.getElementById('yomifudaImageDownloadButton');
         this.yomifudaImageDownloadButton.addEventListener(event, this.downloadYomifudaImage.bind(this));
-        this.yomifudaImageDownloadButton.style = 'display: none;';
-        this.yomifudaImageDownloadButton.disabled = true;
 
         // 絵札画像
         this.outputKarutaEfudaImage = document.getElementById('outputKarutaEfudaImage');
-        this.outputKarutaEfudaImage.style = 'display: none;';
         
         // 読み札画像
         this.outputKarutaYomifudaImage = document.getElementById('outputKarutaYomifudaImage');
-        this.outputKarutaYomifudaImage.style = 'display: none;';
+
+
+        // 各スライダー等リセット
+        this.#reset();
 
     }
 
@@ -475,6 +473,10 @@ class KarutaGenerator {
         this.outputKarutaEfudaImage.src   = '';
         this.outputKarutaYomifudaImage.style = 'display: none;';
         this.outputKarutaYomifudaImage.src   = '';
+        this.efudaImageDownloadButton.style = 'display: none;';
+        this.efudaImageDownloadButton.disabled = true;
+        this.yomifudaImageDownloadButton.style = 'display: none;';
+        this.yomifudaImageDownloadButton.disabled = true;
     }
     
     //---------------------------------------------
