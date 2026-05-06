@@ -504,3 +504,26 @@ class KarutaGenerator {
 
 const karutaGenerator = new KarutaGenerator();
 karutaGenerator.initialize();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('scroll', () => {
+        const floatButton = document.querySelector('.float-button-wrap');
+        if (this.scrollY <= 10) {
+            floatButton.classList.remove('show');
+            return;
+        }
+        floatButton.classList.add('show');
+
+        const scrollHeight = document.documentElement.scrollHeight;// ページ全体の高さ
+        const scrollPosition = this.innerHeight + this.scrollY;// ページの一番上からスクロールされた距離
+        const footerHeight = document.querySelector("footer").clientHeight;// フッターの高さ
+
+        if (scrollHeight - scrollPosition <= footerHeight) {
+            floatButton.style.position = 'absolute';
+        } else {
+            floatButton.style.position = 'fixed';
+        }
+
+    });
+});
