@@ -124,13 +124,13 @@ canvas, img {
 .fade {
     visibility: hidden;
     opacity: 0;
-    transition: opacity 300ms;
+    transition: all 300ms;
 }
 
 .fade.show {
     visibility: visible;
     opacity: 1;
-    transition: opacity 300ms;
+    transition: all 300ms;
 }
 
 /*****************************
